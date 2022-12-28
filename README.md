@@ -59,14 +59,19 @@ The dApp is implemented in Rust using the Yew framework, which provides a high-l
 To deploy the smart contract and the dApp, follow these steps:
 
  1.   Install the required dependencies:
-{
+
         Rust compiler: https://www.rust-lang.org/tools/install
+    
         Rust package manager (Cargo): https://doc.rust-lang.org/cargo/getting-started/installation.html
+        
         Rust WebAssembly compiler (wasm-pack): https://rustwasm.github.io/wasm-pack/installer/
+        
         Ethereum wallet: https://www.ethereum.org/greeter
+    
         Web3 provider: https://web3js.readthedocs.io/en/v1.2.11/getting-started.html#installing-web3
+    
         Arweave client: https://www.arweave.org/developers/tools/arweave-cli
-}
+
 
   2.  Clone this repository and navigate to the root directory:
 
