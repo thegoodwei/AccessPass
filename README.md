@@ -101,80 +101,107 @@ We hope that this solution will contribute to the growth and adoption of dApps i
  -   An Ethereum wallet and a connection to the Ethereum network.
 
 
-## Integrations and implementation guide
 To use the AccessPass dApp and smart contract to deploy an encrypted video with an NFT of movieThumbnail.jpg as the key for an encrypted newMovie.mp4:
+
 1.    Install the required dependencies:
+
         Rust compiler: https://www.rust-lang.org/tools/install
         Rust package manager (Cargo): https://doc.rust-lang.org/cargo/getting-started/installation.html
         Rust WebAssembly compiler (wasm-pack): https://rustwasm.github.io/wasm-pack/installer/
         Ethereum wallet: https://www.ethereum.org/greeter
         Web3 provider: https://web3js.readthedocs.io/en/v1.2.11/getting-started.html#installing-web3
         Arweave client: https://www.arweave.org/developers/tools/arweave-cli
+
 2.       Clone this repository and navigate to the root directory:
+
 ``
 git clone https://github.com/<repository-url>
 cd encrypted-video-nft
 ``
+
 3. Compile the smart contract and the dApp:
+
 ``
 wasm-pack build --target web contract
 wasm-pack build --target no-modules --out-dir pkg ui
 ``
+
 4. Deploy the smart contract to the Ethereum network using a deployer. You can use the deployer provided in the deployer directory:
+
 ``
 cargo run --release -- --web3 <web3-provider-url> --eth-key <ethereum-wallet-private-key> --eth-account <ethereum-wallet-address> --video <path-to-newMovie.mp4> --access-key <access-key> --nft-type <nft-type> --royalty-fee <royalty-fee>
 ``
+
 5. Replace the placeholders with your own values. The access-key should be a 32-byte hexadecimal string. The nft-type and royalty-fee should be integers.
+
 6. Host the compiled dApp on a web server. You can use the pkg directory generated in step 3 as the root directory of the web server.
+
 7. Access the dApp using a compatible web browser and connect to the Ethereum network using a web3 provider and your Ethereum wallet.
+
 8. Use the dApp to buy an NFT with movieThumbnail.jpg as the thumbnail. The NFT will grant access to the encrypted newMovie.mp4.
 
 To store the encrypted newMovie.mp4 on Arweave:
 
 1.    Use the Arweave client to create a wallet:
+
 ``
 arweave wallet create
 ``
-This will generate a wallet file and a wallet key file.
+
+- This will generate a wallet file and a wallet key file.
 
 2. Use the Arweave client to transfer AR tokens to your wallet:
+
 ``
         arweave transfer <amount> --to <wallet-address> --key-file <path-to-wallet-key-file>
 ``
+
         Replace the placeholders with your own values. The amount should be specified in AR.
         Use the Arweave client to upload the encrypted newMovie.mp4 to Arweave:
         
 3.       Store the encrypted newMovie.mp4 on Arweave by using the Arweave client to create a wallet:
+
 ``
 arweave wallet create
 ``
-This will generate a wallet file and a wallet key file.
+
+- This will generate a wallet file and a wallet key file.
+
 4.  Use the Arweave client to transfer AR tokens to your wallet:
+
 ``
 arweave transfer <amount> --to <wallet-address> --key-file <path-to-wallet-key-file>
 ``
+
 5.  Replace the placeholders with your own values. The amount should be specified in AR.
 Use the Arweave client to upload the encrypted newMovie.mp4 to Arweave:
+
 ``
 arweave upload --key-file <path-to-wallet-key-file> --file <path-to-encrypted-newMovie.mp4>
 ``
-This will generate a transaction ID for the upload.
+
+- This will generate a transaction ID for the upload.
+
 6.  Use the Arweave client to verify the upload:
+
 ``
     arweave get-transaction <transaction-id>
 ``
+
     This will show the details of the transaction, including the status and the file size.
 
-You can now use the dApp to decrypt and play the encrypted newMovie.mp4 using the access key provided in the NFT. You can also sell the NFT to other users and claim the resale royalties.
+- You can now use the dApp to decrypt and play the encrypted newMovie.mp4 using the access key provided in the NFT. You can also sell the NFT to other users and claim the resale royalties.
 
 
 To download the encrypted newMovie.mp4 from Arweave, use the following command:
+
 ``
     arweave download --transaction <transaction-id> --output <output-file-name>
 ``
+
 -    Replace the placeholders with your own values. The output-file-name should be the name of the file you want to save the downloaded content to.
 
-You have successfully deployed an encrypted video with an NFT as the key and stored the encrypted video on Arweave.
+- You should have successfully deployed an encrypted video with an NFT as the key and stored the encrypted video on Arweave.
 
 ## To use 0xSplits.xyz to share the royalty
 
@@ -198,8 +225,9 @@ You have successfully deployed an encrypted video with an NFT as the key and sto
 
 10.    Click the "Add Beneficiary" button.   You should now see the beneficiary listed under your contract.
 
-    Whenever someone buys or sells an NFT from your contract, 0xSplits will automatically split the royalties according to the specified percentages and send them to the specified beneficiaries.
- You can view the details of the royalties and the transactions on the "Transactions" page.
+-     Whenever someone buys or sells an NFT from your contract, 0xSplits will automatically split the royalties according to the specified percentages and send them to the specified beneficiaries.
+
+-  You can view the details of the royalties and the transactions on the "Transactions" page.
 
 
 ---------------------------------------------------------------------------------------------------------------------
