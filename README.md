@@ -1,37 +1,37 @@
 # AccessPass
 DRM encrypted videos, with erc1155 tokenized license keys and shared royalty. 
 
-#Encrypted Video NFT-Key; dApp
+# Encrypted Video NFT-Key; dApp
 
 This dApp allows users to buy, sell, and play encrypted videos using non-fungible tokens (NFTs). The dApp is implemented in Rust and uses the Yew framework for the user interface. The NFTs are implemented as ERC1155 tokens on the Ethereum blockchain.
 
 
-#Summary
+# Summary
 
 #### The AccessPass.rs Smart Contract is implemented on the Ethereum network using the ERC1155 standard, which allows for both fungible and non-fungible tokens in a single contract. The Dapp is built using Rust and Yew, and provides a user-friendly interface for interacting with the Smart Contract.
 
-####AccessPass is a smart contract dApp for creating and managing encrypted video tokens using the ERC1155 standard, which enables users to buy, sell, and play encrypted videos using semi-fungible NFTs as access keys. The dApp provides a user-friendly interface for interacting with the smart contract and decrypting and playing the video using the access key provided in the token.
+#### AccessPass is a smart contract dApp for creating and managing encrypted video tokens using the ERC1155 standard, which enables users to buy, sell, and play encrypted videos using semi-fungible NFTs as access keys. The dApp provides a user-friendly interface for interacting with the smart contract and decrypting and playing the video using the access key provided in the token.
 
-####The smart contract implements a royalty system, where a percentage of the sale price is transferred to the original owner of the token whenever it is resold. This allows creators to earn ongoing revenue from their videos. The royalty fee and the NFT type are configurable constants in the contract. One key feature is the integration with 0xSplits.xyz, which allows the creators of the NFTs to receive royalties from the resale of their NFTs, and to share those royalties with the early investors and subscribers. 
+#### The smart contract implements a royalty system, where a percentage of the sale price is transferred to the original owner of the token whenever it is resold. This allows creators to earn ongoing revenue from their videos. The royalty fee and the NFT type are configurable constants in the contract. One key feature is the integration with 0xSplits.xyz, which allows the creators of the NFTs to receive royalties from the resale of their NFTs, and to share those royalties with the early investors and subscribers. 
 
-####The smart contract and dApp are implemented in Rust and use the WebAssembly (WASM) runtime for efficient execution on the Ethereum network. The dApp is built using the Yew framework for building web-based applications with Rust.
+#### The smart contract and dApp are implemented in Rust and use the WebAssembly (WASM) runtime for efficient execution on the Ethereum network. The dApp is built using the Yew framework for building web-based applications with Rust.
 
-####The encrypted video is stored on a decentralized storage platform, such as Arweave, a decentralized storage platform that allows for the permanent and secure storage of the encrypted videos. This ensures the long-term availability of the content and protects against censorship and data loss. This integration is to ensure its availability and durability. The access key is stored in the smart contract and is only accessible to the owner of the token. The video is encrypted using the Widevine DRM system to ensure its security and protect the copyright of the creator.
+#### The encrypted video is stored on a decentralized storage platform, such as Arweave, a decentralized storage platform that allows for the permanent and secure storage of the encrypted videos. This ensures the long-term availability of the content and protects against censorship and data loss. This integration is to ensure its availability and durability. The access key is stored in the smart contract and is only accessible to the owner of the token. The video is encrypted using the Widevine DRM system to ensure its security and protect the copyright of the creator.
 
-####In summary, our Smart Contract and Dapp offer a scalable and secure solution forcreating and managing encrypted video tokens on the Ethereum network. It allows creators and their early investors to earn ongoing revenue from the distribution and monetization of encrypted videos, leveraging the benefits of blockchain technology and decentralized storage. This enables a new revenue stream for content creators and promotes the sustainability of the ecosystem. 
-
-
+#### In summary, our Smart Contract and Dapp offer a scalable and secure solution forcreating and managing encrypted video tokens on the Ethereum network. It allows creators and their early investors to earn ongoing revenue from the distribution and monetization of encrypted videos, leveraging the benefits of blockchain technology and decentralized storage. This enables a new revenue stream for content creators and promotes the sustainability of the ecosystem. 
 
 
-##Requirements
+---------------------------------------------------------------------------------------------------------------------
 
-###To use the dApp, you will need the following:
+## Usage
+
+### To use the dApp, you will need the following:
 
  -   A compatible web browser that supports Rust and WebAssembly.
  -   An Ethereum wallet and a connection to the Ethereum network.
 
 
-##Integrations and Usage Guide
+## Integrations and implementation guide
 To use the AccessPass dApp and smart contract to deploy an encrypted video with an NFT of movieThumbnail.jpg as the key for an encrypted newMovie.mp4:
 1.    Install the required dependencies:
         Rust compiler: https://www.rust-lang.org/tools/install
@@ -40,61 +40,50 @@ To use the AccessPass dApp and smart contract to deploy an encrypted video with 
         Ethereum wallet: https://www.ethereum.org/greeter
         Web3 provider: https://web3js.readthedocs.io/en/v1.2.11/getting-started.html#installing-web3
         Arweave client: https://www.arweave.org/developers/tools/arweave-cli
-2.
-    Clone this repository and navigate to the root directory:
+2.       Clone this repository and navigate to the root directory:
 ``
 git clone https://github.com/<repository-url>
 cd encrypted-video-nft
 ``
-3.
-Compile the smart contract and the dApp:
+3. Compile the smart contract and the dApp:
 ``
 wasm-pack build --target web contract
 wasm-pack build --target no-modules --out-dir pkg ui
 ``
-4.
-Deploy the smart contract to the Ethereum network using a deployer. You can use the deployer provided in the deployer directory:
+4. Deploy the smart contract to the Ethereum network using a deployer. You can use the deployer provided in the deployer directory:
 ``
 cargo run --release -- --web3 <web3-provider-url> --eth-key <ethereum-wallet-private-key> --eth-account <ethereum-wallet-address> --video <path-to-newMovie.mp4> --access-key <access-key> --nft-type <nft-type> --royalty-fee <royalty-fee>
 ``
-5.
-Replace the placeholders with your own values. The access-key should be a 32-byte hexadecimal string. The nft-type and royalty-fee should be integers.
-6.
-Host the compiled dApp on a web server. You can use the pkg directory generated in step 3 as the root directory of the web server.
-7.
-Access the dApp using a compatible web browser and connect to the Ethereum network using a web3 provider and your Ethereum wallet.
-8.
-Use the dApp to buy an NFT with movieThumbnail.jpg as the thumbnail. The NFT will grant access to the encrypted newMovie.mp4.
+5. Replace the placeholders with your own values. The access-key should be a 32-byte hexadecimal string. The nft-type and royalty-fee should be integers.
+6. Host the compiled dApp on a web server. You can use the pkg directory generated in step 3 as the root directory of the web server.
+7. Access the dApp using a compatible web browser and connect to the Ethereum network using a web3 provider and your Ethereum wallet.
+8. Use the dApp to buy an NFT with movieThumbnail.jpg as the thumbnail. The NFT will grant access to the encrypted newMovie.mp4.
 
-To store the encrypted newMovie.mp4 on Arweave, follow these steps:
+To store the encrypted newMovie.mp4 on Arweave:
 
 1.    Use the Arweave client to create a wallet:
 ``
 arweave wallet create
 ``
 This will generate a wallet file and a wallet key file.
-2.
-Use the Arweave client to transfer AR tokens to your wallet:
+
+2. Use the Arweave client to transfer AR tokens to your wallet:
 ``
         arweave transfer <amount> --to <wallet-address> --key-file <path-to-wallet-key-file>
 ``
         Replace the placeholders with your own values. The amount should be specified in AR.
         Use the Arweave client to upload the encrypted newMovie.mp4 to Arweave:
-        ``
-3.
-    To store the encrypted newMovie.mp4 on Arweave, follow these steps:
-        Use the Arweave client to create a wallet:
+        
+3.       Store the encrypted newMovie.mp4 on Arweave by using the Arweave client to create a wallet:
 ``
 arweave wallet create
 ``
 This will generate a wallet file and a wallet key file.
-4.
-Use the Arweave client to transfer AR tokens to your wallet:
+4.  Use the Arweave client to transfer AR tokens to your wallet:
 ``
 arweave transfer <amount> --to <wallet-address> --key-file <path-to-wallet-key-file>
 ``
-5.
-Replace the placeholders with your own values. The amount should be specified in AR.
+5.  Replace the placeholders with your own values. The amount should be specified in AR.
 Use the Arweave client to upload the encrypted newMovie.mp4 to Arweave:
 ``
 arweave upload --key-file <path-to-wallet-key-file> --file <path-to-encrypted-newMovie.mp4>
@@ -143,19 +132,21 @@ You have successfully deployed an encrypted video with an NFT as the key and sto
  You can view the details of the royalties and the transactions on the "Transactions" page.
 
 
+---------------------------------------------------------------------------------------------------------------------
 
-#Documentation
 
-##Smart Contract
+# Documentation
 
-###Features
+## Smart Contract
+
+### Features
 The smart contract for the dApp is an ERC1155 contract that allows for the creation and transfer of NFTs that grant access to encrypted videos. The contract has the following features:
 
 1.    NFTs are semi-fungible: each NFT has a unique ID and can only be used to access a specific encrypted video, but NFTs with the same ID can be exchanged without restrictions.
 2.    Resale royalties: when an NFT is sold, the seller is entitled to a percentage of the sale price as a royalty. The royalty fee is set in the contract and is applied to all NFT sales.
 3.    Access keys: the access key to decrypt the video is private to the NFT owner and is not stored on the blockchain.
 
-###Functions
+### Functions
 
 The smart contract has the following functions:
 
@@ -165,21 +156,21 @@ The smart contract has the following functions:
 4.    getRoyaltyFee() -> U256: This function returns the royalty fee for NFT sales.
 5.    setRoyaltyFee(fee: U256) -> Result<(), String>: This function sets the royalty fee for NFT sales.
 
-###Events
+### Events
 
 The smart contract has the following events:
 
 -    BatchReceived(Address, Vec<U256>, Vec<H256>): This event is emitted when a batch of NFTs is received by the contract.
 -    BatchTransferred(Address, Address, Vec<U256>, Vec<H256>): This event is emitted when a batch of NFTs is transferred from one owner to another.
 
-##DApp
+## DApp
 
 The dApp is a Rust application that provides the logic for interacting with the smart contract and the user interface. It includes the following components:
 
 -    VideoPlayer: This struct represents a video player that can decrypt and play an encrypted video using an access key.
 -    EncryptedVideoNFTContract: This struct represents an instance of the smart contract and provides functions for interacting with the contract.
 
-###Functions
+### Functions
 
 The dApp has the following functions:
 
@@ -214,7 +205,7 @@ The user interface has the following functions:
 
 -    App::view(&self) -> Html: This function renders the user interface. It includes UI elements such as text input, buttons, and a video player.
 
-###Messages
+### Messages
 
 The user interface has the following messages:
 
@@ -224,7 +215,7 @@ The user interface has the following messages:
 
 3.    Play: This message is sent when the user clicks the "Play" button. It triggers the process of decrypting and playing the video using the access key.
 
-###Deployment
+### Deployment
 
 To deploy the dApp, you will need to perform the following steps:
 
@@ -233,6 +224,6 @@ To deploy the dApp, you will need to perform the following steps:
 3.    Host the compiled dApp on a web server.
 4.   Access the dApp using a compatible web browser and connect to the Ethereum network using a web3 provider and your Ethereum wallet.
 
-###License
+#### License
 
-This dApp is licensed under the MIT license. See the LICENSE file for details.
+This dApp is licensed under the MIT license.
