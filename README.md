@@ -122,13 +122,16 @@ To use the AccessPass dApp and smart contract to deploy an encrypted video with 
         Web3 provider: https://web3js.readthedocs.io/en/v1.2.11/getting-started.html#installing-web3
         Arweave client: https://www.arweave.org/developers/tools/arweave-cli
 
-2.       Clone this repository and navigate to the root directory:
 
+2.  Clone this repository and navigate to the root directory
+ 
+ 
 ``
-git clone https://github.com/<repository-url>
+git clone https://github.com/<github.com/thegoodwei/AccessPass>
 cd encrypted-video-nft
 ``
-
+  
+  
 3. Compile the smart contract and the dApp:
 
 ``
