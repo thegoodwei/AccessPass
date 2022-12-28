@@ -88,19 +88,63 @@ wasm-pack build
 
  - This will generate the WASM bytecode and the ABI for the smart contract and the dApp.
 
-4. Deploy the smart contract to the Ethereum network:
-
- - Use your Ethereum wallet to create a new account or import an existing one.
- - Use the Web3 provider to send a transaction to the Ethereum network, deploying the smart contract and specifying the required parameters:
-
-    - `thumbnail`: The thumbnail image for the video, encoded as a base64 string.
-    - `royalty_percentage`: The percentage of the sale price to be transferred as royalties.
-    - `nft_type`: The type of the NFT, represented as a bytes32 string.
+4. Deploy the smart contract to the Ethereum network (see Deployment, below)
 
 5. Deploy the dApp to a web server or a decentralized storage platform, such as IPFS or Arweave.
 
 6. Use the dApp to interact with the smart contract and manage the encrypted video tokens.
 
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+## Deployment
+
+To use this deployer.rs file, follow these steps:
+
+    Install the required crates and libraries by adding the following lines to your Cargo.toml file:
+
+``
+[dependencies]
+web3 = "0.9.0"
+ethcontract = "0.10.0"
+hex = "0.3.2"
+arweave = "0.10.1"
+base64 = "0.10.0"
+image = "0.23.3"
+wasm-bindgen = "0.2.58"
+wasm-bindgen-futures = "0.3.3"
+serde_json = "1.0.50"
+futures = "0.3.5"
+rust_widevine = "0.1.1"
+``
+
+Compile the deployer.rs file using the Rust compiler:
+
+``
+rustc deployer.rs
+``
+
+
+Run the compiled deployer binary, providing the required command line arguments:
+
+``
+./deployer x_qty thumbnail.jpg unencrypted-video.mp4 royalty_percentage royalty_beneficiary rpc_url wallet_url arweave_url arweave_key
+``
+
+Where:
+
+-    x_qty: The number of ERC1155 tokens to create.
+-    thumbnail.jpg: The path to the thumbnail image file.
+-    unencrypted-video.mp4: The path to the unencrypted video file.
+-    royalty_percentage: The percentage of the token sale price to be paid as a royalty.
+-    royalty_beneficiary: The Ethereum address of the royalty beneficiary.
+-    rpc_url: The URL of the Ethereum JSON-RPC endpoint.
+-    wallet_url: The URL of the Ethereum wallet.
+-    arweave_url: The URL of the Arweave node.
+-    arweave_key: The base64-encoded Arweave key file.
+
+This will deploy the ERC1155 smart contract, encrypt the video file using Widevine, store the encrypted video on Arweave, and create the specified number of tokens with the private encryption key and transaction ID of the encrypted video stored on the smart contract. The deployer will return a list of transaction hashes for the token creation transactions.
 ---------------------------------------------------------------------------------------------------------------------
 
 ## Usage Guide
@@ -329,18 +373,6 @@ The user interface has the following messages:
 2.    Sell: This message is sent when the user clicks the "Sell" button. It triggers the process of selling an NFT and claiming the resale royalties.
 
 3.    Play: This message is sent when the user clicks the "Play" button. It triggers the process of decrypting and playing the video using the access key.
-
-### Deployment
-
-To deploy the dApp, you will need to perform the following steps:
-
-1.    Compile the smart contract and the dApp using a Rust compiler and the relevant dependencies.
-
-2.    Deploy the compiled smart contract to the Ethereum network using a deployer, such as the one provided in the deployer directory.
-
-3.    Host the compiled dApp on a web server.
-
-4.   Access the dApp using a compatible web browser and connect to the Ethereum network using a web3 provider and your Ethereum wallet.
 
 #### License
 
