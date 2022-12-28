@@ -83,42 +83,221 @@ use mpl_trifle::{
 };
 use rust_widevine::{key_server, licensing};
 
-struct EncryptedVideoNFT {
-    id: bytes32,
-    owner: address,
-    video_url: String,
-}
+//The EncryptedVideoToken struct represents a smart contract that holds encrypted video tokens. It has fields for the total supply of tokens, a map of token balances for each owner, 
+//a map of token ownership, a map of metadata for each token, and the royalty percentage and beneficiary address for resale royalties.
+#[derive(Clone, Debug, Deserialize, Serialize)]
+struct EncryptedVideoToken {
+    total_supply: U64,
+    balance_of: BTreeMap<Address, U64>,
+    owner_of: BTreeMap<U64, Address>,
+    metadata: BTreeMap<U64, Bytes>,
+    royalty_beneficiary: Address,
+    royalty_percentage: U256,
+    key_id: H256,
 
-impl EncryptedVideoNFT {
-    fn new(id: bytes32, owner: address, video_url: String) -> Self {
-        Self {
-            id,
-            owner,
-            video_url,
-        }
-    }
-
-    fn get_access_key(&self) -> Option<Vec<u8>> {
-        if self.owner == msg.sender {
-            // If the caller is the owner of the NFT, retrieve the access key
-            // from the Widevine key server using the video URL and the NFT ID as credentials
-            let access_key = key_server::get_access_key(self.video_url, self.id);
-            Some(access_key)
-        } else {
-            // If the caller is not the owner of the NFT, return None
-            None
-        }
-    }
-}
-
-struct EncryptedVideoNFTs {
     // Define a mapping from NFT IDs to EncryptedVideoNFT structs
     mapping(bytes32 => EncryptedVideoNFT) public nfts;
     // Define a mapping from NFT IDs to ownership history records
     mapping(bytes32 => OwnableHistory) public history;
 }
 
+//The call function uses a match statement to determine which function to execute based on the variant of the Call enum passed 
+//as an argument. The create, transfer, and safe_transfer functions all update the balance_of, owner_of, and metadata fields of the
+//EncryptedVideoToken struct, while the get_access_key function retrieves the private encryption key for a token if the caller 
+//is the owner of the token. The balance_of function returns the balance of the specified owner.
+
+//The Call enum represents the various functions
+//that can be called on the smart contract. It has variants for GetAccessKey, Create, Transfer, SafeTransfer, and BalanceOf.
+#[derive(Clone, Debug, Deserialize, Serialize)]
+enum Call {
+    GetAccessKey,
+    Create {
+        thumbnail: Bytes,
+        royalty_percentage: U256,
+        royalty_beneficiary: Address,
+        key_id: H256,
+    },
+    Transfer { id: U64, to: Address },
+    SafeTransfer { id: U64, to: Address },
+    BalanceOf { owner: Address },
+}
+/*
+//depreciated?
+struct EncryptedVideoNFT {
+    id: bytes32,
+    owner: address,
+    video_url: String,
+}*/
+impl EncryptedVideoToken {
+    
+    
+    
+    fn create(&self, id: U64, qty:U64, thumbnail: Bytes, royalty_percentage: U256, royalty_beneficiary: Address, key_id: H256) -> EncryptedVideoToken {
+        let metadata = json!({
+            "thumbnail": thumbnail,
+            "transaction_id": transaction_id
+       //     ,   (1..=qty).map(|i| (i, thumbnail)).collect();
+        }).to_string();
+                let total_supply = qty;
+        let total_supply = qty;
+        let balance_of = BTreeMap::new();
+        let owner_of = (1..=qty).map(|i| (i, msg.sender)).collect();
+
+     //   let mut balance_of = self.balance_of.clone();
+     //   let mut owner_of = self.owner_of.clone();
+        let mut metadata_map = self.metadata.clone();
+        let sender = self.get_sender();
+        let new_balance = balance_of.entry(sender).or_insert(0.into());
+        *new_balance += 1.into();
+        owner_of.insert(id, sender);
+        metadata_map.insert(id, metadata.into());
+        EncryptedVideoToken {
+            total_supply: self.total_supply + 1.into(),
+            balance_of,
+            owner_of,
+            metadata: metadata_map,
+            royalty_beneficiary: self.royalty_beneficiary,
+            royalty_percentage: self.royalty_percentage,
+            key_id: self.key_id,
+        }
+ fn call(&self, call: Call) -> EncryptedVideoToken {
+        match call {
+            Call::GetAccessKey => {
+                if self.owner_of.get(&call.id)? == &self.get_sender() {
+                    let key_id = self.key_id;
+                    // implementation to retrieve the private encryption key goes here
+                } else {
+                    self.clone()
+                }
+            }
+            Call::Create {
+                qty,
+                thumbnail,
+                royalty_percentage,
+                royalty_beneficiary,
+                key_id,
+            } => {
+                let mut balance_of = self.balance_of.clone();
+                let mut owner_of = self.owner_of.clone();
+                let mut metadata = self.metadata.clone();
+                let mut total_supply = self.total_supply;
+
+                let new_tokens: Vec<U64> = (self.total_supply + 1..=self.total_supply + qty).collect();
+                balance_of.insert(msg.sender, balance_of.get(&msg.sender).unwrap_or(&0.into()) + qty);
+                for (i, token_id) in new_tokens.iter().enumerate() {
+                    owner_of.insert(*token_id, msg.sender);
+                    metadata.insert(*token_id, thumbnail.clone());
+                    }
+                let royalty_beneficiary = royalty_beneficiary;
+                let royalty_percentage = royalty_percentage;
+                let key_id = key_id;
+                
+                
+                let sender = self.get_sender();
+                total_supply += 1.into();
+                let id = total_supply;
+                let balance = balance_of.entry(sender).or_insert(0.into());
+                *balance += 1.into();
+                owner_of.insert(id, sender);
+                metadata.insert(id, thumbnail);
+                
+                EncryptedVideoToken {
+                    total_supply: self.total_supply + qty,
+                    balance_of,
+                    owner_of,
+                    metadata,
+                    royalty_beneficiary,
+                    royalty_percentage,
+                    key_id,
+                }
+            }
+            Call::Transfer { id, to } => {
+                let mut balance_of = self.balance_of.clone();
+                let mut owner_of = self.owner_of.clone();
+                let sender_balance = balance_of.get_mut(&self.get_sender())?;
+                let recipient_balance = balance_of.entry(to).or_insert(0.into());
+                *sender_balance -= 1.into();
+                *recipient_balance += 1.into();
+                owner_of.insert(id, to);
+                EncryptedVideoToken {
+                    total_supply: self.total_supply,
+                    balance_of,
+                    owner_of,
+                    metadata: self.metadata.clone(),
+                    royalty_beneficiary: self.royalty_beneficiary,
+                    royalty_percentage: self.royalty_percentage,
+                    key_id: self.key_id,
+                }
+            }            Call::SafeTransfer { id, to } => {
+                if self.owner_of.get(&id)? == &self.get_sender() {
+                    self.transfer(id, to)
+                } else {
+                    self.clone()
+                }
+            }
+            Call::BalanceOf { owner } => {
+                *self.balance_of.get(&owner).unwrap_or(&0.into())
+            }
+        }
+    }
+
+
+
+    }
+        
+        fn transfer(&self, id: U64, to: Address) -> EncryptedVideoToken {
+        let mut balance_of = self.balance_of.clone();
+        let mut owner_of = self.owner_of.clone();
+        let from_balance = balance_of.get_mut(&self.get_sender()).unwrap();
+        *from_balance -= 1.into();
+        let to_balance = balance_of.entry(to).or_insert(0.into());
+        *to_balance += 1.into();
+        owner_of.insert(id, to);
+        EncryptedVideoToken {
+            total_supply: self.total_supply,
+            balance_of,
+            owner_of,
+            metadata: self.metadata.clone(),
+            royalty_beneficiary: self.royalty_beneficiary,
+            royalty_percentage: self.royalty_percentage,
+            key_id: self.key_id,
+        }
+        
+        
+        
+        
+        
+
+    fn get_access_key(&self) -> Option<Vec<u8>> {
+        if self.owner_of.get(&0)? == &self.get_sender() {
+            Some(self.key_id.0.to_vec())
+        } else {
+            None
+        }
+    }
+ fn safe_transfer(&self, id: U64, to: Address) -> EncryptedVideoToken {
+        if self.owner_of.get(&id)? == &self.get_sender() {
+            self.transfer(id, to)
+        } else {
+            self.clone()
+        }
+    }
+
+    fn balance_of(&self, owner: Address) -> U64 {
+        *self.balance_of.get(&owner).unwrap_or(&0.into())
+    }
+
+        fn get_sender(&self) -> Address {
+        msg.sender
+    }
+}
+    }
+}
+
+
 // Implement the ERC1155Mutable trait to allow the contract to manage multiple types of NFTs
+
+
 contract EncryptedVideoNFTContract is ERC1155, ERC1155Mutable, SafeERC1155 {
     // Define the ID of the NFT type
     bytes32 public constant NFT_TYPE = 0x01;
