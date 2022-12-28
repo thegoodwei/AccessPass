@@ -29,7 +29,13 @@ The use of decentralized applications (dApps) on the Ethereum network is growing
 
 However, the distribution of media content on the Ethereum network poses several challenges, including security, scalability, and copyright protection. Encrypting the content and storing it on a decentralized storage platform can address the security and scalability issues, but it does not solve the problem of copyright protection. The use of a smart contract and non-fungible tokens (NFTs) can provide a solution by creating a system for managing the access and ownership of the content.
 
+We hope that this solution will contribute to the growth and adoption of dApps in the media industry, removing bias from content publishing incentives to enable a new renaissance of independent creators.
+
 ### Solution
+
+We have created a smart contract and dApp for creating and managing encrypted video tokens using the ERC1155 standard. The smart contract allows users to buy and sell semi-fungible tokens that grant access to an encrypted video, and it implements a royalty system for the creators of the video. The dApp provides a user-friendly interface for interacting with the smart contract and decrypting and playing the video using the access key provided in the token.
+
+Our solution addresses the challenges of distributing media content on the Ethereum network by providing a scalable, secure, and transparent platform for creators to monetize their content and for users to access high-quality content with the assurance of copyright protection.
 
 We propose a smart contract and dApp that addresses the challenges of distributing media content on the Ethereum network by implementing the following features:
 
@@ -53,43 +59,41 @@ The dApp is implemented in Rust using the Yew framework, which provides a high-l
 To deploy the smart contract and the dApp, follow these steps:
 
  1.   Install the required dependencies:
-   -     Rust compiler: https://www.rust-lang.org/tools/install
-   -     Rust package manager (Cargo): https://doc.rust-lang.org/cargo/getting-started/installation.html
-   -     Rust WebAssembly compiler (wasm-pack): https://rustwasm.github.io/wasm-pack/installer/
-   -     Ethereum wallet: https://www.ethereum.org/greeter
-   -     Web3 provider: https://web3js.readthedocs.io/en/v1.2.11/getting-started.html#installing-web3
-   -     Arweave client: https://www.arweave.org/developers/tools/arweave-cli
 
-    Clone this repository and navigate to the root directory:
+        Rust compiler: https://www.rust-lang.org/tools/install
+        Rust package manager (Cargo): https://doc.rust-lang.org/cargo/getting-started/installation.html
+        Rust WebAssembly compiler (wasm-pack): https://rustwasm.github.io/wasm-pack/installer/
+        Ethereum wallet: https://www.ethereum.org/greeter
+        Web3 provider: https://web3js.readthedocs.io/en/v1.2.11/getting-started.html#installing-web3
+        Arweave client: https://www.arweave.org/developers/tools/arweave-cli
+
+  2.  Clone this repository and navigate to the root directory:
+
 ``
     git clone https://github.com/thegoodwei/AccessPass
     cd encrypted-video-tokens
 ``
 
 3. Build the smart contract and the dApp:
+
 ``
 wasm-pack build
 ``
-This will generate the WASM bytecode and the ABI for the smart contract and the dApp.
+
+- This will generate the WASM bytecode and the ABI for the smart contract and the dApp.
 
 4. Deploy the smart contract to the Ethereum network:
+
 - Use your Ethereum wallet to create a new account or import an existing one.
 - Use the Web3 provider to send a transaction to the Ethereum network, deploying the smart contract and specifying the required parameters:
-  - `thumbnail`: The thumbnail image for the video, encoded as a base64 string.
-  - `royalty_percentage`: The percentage of the sale price to be transferred as royalties.
-  - `nft_type`: The type of the NFT, represented as a bytes32 string.
+
+   - `thumbnail`: The thumbnail image for the video, encoded as a base64 string.
+   - `royalty_percentage`: The percentage of the sale price to be transferred as royalties.
+   - `nft_type`: The type of the NFT, represented as a bytes32 string.
 
 5. Deploy the dApp to a web server or a decentralized storage platform, such as IPFS or Arweave.
 
 6. Use the dApp to interact with the smart contract and manage the encrypted video tokens.
-
-## Conclusion
-
-In this whitepaper, we have introduced a smart contract and dApp for creating and managing encrypted video tokens using the ERC1155 standard. The smart contract allows users to buy and sell semi-fungible tokens that grant access to an encrypted video, and it implements a royalty system for the creators of the video. The dApp provides a user-friendly interface for interacting with the smart contract and decrypting and playing the video using the access key provided in the token.
-
-Our solution addresses the challenges of distributing media content on the Ethereum network by providing a scalable, secure, and transparent platform for creators to monetize their content and for users to access high-quality content with the assurance of copyright protection.
-
-We hope that this solution will contribute to the growth and adoption of dApps in the media industry, removing bias from content publishing incentives to enable a new renaissance of independent creators.
 
 ---------------------------------------------------------------------------------------------------------------------
 
