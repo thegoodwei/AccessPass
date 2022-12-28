@@ -303,7 +303,7 @@ web3: &Web3, contract_address: Address) -> Self: This function creates a new ins
 
 -    EncryptedVideoNFTContract::get_access_key(id: U256) -> Option<Vec<u8>>: This function is a wrapper around the getAccessKey function of the smart contract. It calls the function on the contract and returns the result.
 
-##User Interface
+## User Interface
 
 The user interface is a web-based application built using the Yew framework. It provides UI elements for interacting with the dApp, including text input, buttons, and a video player.
 Components
@@ -312,7 +312,7 @@ The user interface has the following components:
 
 -    App: This struct represents the top-level component of the user interface. It contains the state of the interface, including the contract instance and the video player.
 
-###Functions
+### Functions
 
 The user interface has the following functions:
 
