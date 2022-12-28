@@ -212,9 +212,7 @@ To download the encrypted newMovie.mp4 from Arweave, use the following command:
     arweave download --transaction <transaction-id> --output <output-file-name>
 ``
 
--    Replace the placeholders with your own values. The output-file-name should be the name of the file you want to save the downloaded content to.
-
-- You should have successfully deployed an encrypted video with an NFT as the key and stored the encrypted video on Arweave.
+Replace the placeholders with your own values. The output-file-name should be the name of the file you want to save the downloaded content to. This should have successfully deployed an encrypted video with an NFT as the key and stored the encrypted video on Arweave.
 
 ## To use 0xSplits.xyz to share the royalty
 
@@ -238,9 +236,9 @@ To download the encrypted newMovie.mp4 from Arweave, use the following command:
 
 10.    Click the "Add Beneficiary" button.   You should now see the beneficiary listed under your contract.
 
--     Whenever someone buys or sells an NFT from your contract, 0xSplits will automatically split the royalties according to the specified percentages and send them to the specified beneficiaries.
-
--  You can view the details of the royalties and the transactions on the "Transactions" page.
+ 
+ 
+Whenever someone buys or sells an NFT from your contract, 0xSplits will automatically split the royalties according to the specified percentages and send them to the specified beneficiaries. You can view the details of the royalties and the transactions on the "Transactions" page.
 
 
 ---------------------------------------------------------------------------------------------------------------------
