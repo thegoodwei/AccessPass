@@ -44,3 +44,29 @@ tokens: Vec<H256>) -> impl Future<Item = H256, Error = String>: This function ca
 
 VideoPlayer::new() -> Self: This function creates a new instance of the VideoPlayer struct and returns it.
 VideoPlayer::play_video(&self, access_key: Vec<u8>): This function uses the provided access key to decrypt and play the video.
+Usage
+To use the user interface, follow these steps:
+
+Connect to the Ethereum network using a web3 provider and your Ethereum wallet.
+Deploy the smart contract to the Ethereum network.
+Set the NFT type and royalty fee constants in the smart contract.
+Create a batch of NFTs and add them to the contract's state.
+Use the user interface to buy an NFT.
+Use the user interface to retrieve the access key for the NFT.
+Use the user interface to decrypt and play the video using the
+If you want to sell the NFT, use the user interface to claim the resale royalties due to you.
+If you want to transfer the NFT to another user, use the user interface to transfer the NFT to the new owner.
+
+
+Here is an example of how to use the user interface to buy an NFT and play an encrypted video:
+
+Connect to the Ethereum network using a web3 provider and your Ethereum wallet.
+Deploy the smart contract to the Ethereum network.
+Set the NFT type and royalty fee constants in the smart contract.
+Create a batch of NFTs and add them to the contract's state.
+Use the user interface to buy an NFT.
+Use the user interface to retrieve the access key for the NFT.
+Use the user interface to decrypt and play the video using the access key.
+
+License
+Everything is licensed under the MIT license. See the LICENSE file for details.
