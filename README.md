@@ -59,13 +59,14 @@ The dApp is implemented in Rust using the Yew framework, which provides a high-l
 To deploy the smart contract and the dApp, follow these steps:
 
  1.   Install the required dependencies:
-
+{
         Rust compiler: https://www.rust-lang.org/tools/install
         Rust package manager (Cargo): https://doc.rust-lang.org/cargo/getting-started/installation.html
         Rust WebAssembly compiler (wasm-pack): https://rustwasm.github.io/wasm-pack/installer/
         Ethereum wallet: https://www.ethereum.org/greeter
         Web3 provider: https://web3js.readthedocs.io/en/v1.2.11/getting-started.html#installing-web3
         Arweave client: https://www.arweave.org/developers/tools/arweave-cli
+}
 
   2.  Clone this repository and navigate to the root directory:
 
@@ -80,16 +81,16 @@ To deploy the smart contract and the dApp, follow these steps:
 wasm-pack build
 ``
 
-- This will generate the WASM bytecode and the ABI for the smart contract and the dApp.
+ - This will generate the WASM bytecode and the ABI for the smart contract and the dApp.
 
 4. Deploy the smart contract to the Ethereum network:
 
-- Use your Ethereum wallet to create a new account or import an existing one.
-- Use the Web3 provider to send a transaction to the Ethereum network, deploying the smart contract and specifying the required parameters:
+ - Use your Ethereum wallet to create a new account or import an existing one.
+ - Use the Web3 provider to send a transaction to the Ethereum network, deploying the smart contract and specifying the required parameters:
 
-   - `thumbnail`: The thumbnail image for the video, encoded as a base64 string.
-   - `royalty_percentage`: The percentage of the sale price to be transferred as royalties.
-   - `nft_type`: The type of the NFT, represented as a bytes32 string.
+    - `thumbnail`: The thumbnail image for the video, encoded as a base64 string.
+    - `royalty_percentage`: The percentage of the sale price to be transferred as royalties.
+    - `nft_type`: The type of the NFT, represented as a bytes32 string.
 
 5. Deploy the dApp to a web server or a decentralized storage platform, such as IPFS or Arweave.
 
